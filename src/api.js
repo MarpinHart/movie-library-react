@@ -23,9 +23,9 @@ export default {
       .catch(errHandler)
   },
 
-  getFilteredYear(year){
-    console.log(year)
-    return service.get(`/discover/movie?api_key=${apiKey}&sort_by=popularity.desc&primary_release_year=${year}`)
+  getFilteredMovies(startingYear, endingYear){
+    console.log(startingYear, endingYear, "start-end")
+    return service.get(`/discover/movie?api_key=${apiKey}&sort_by=popularity.desc&primary_release_date.gte=${startingYear}&primary_release_date.lte=${endingYear}`)
       .then(res => {
         console.log(res.data.results)
         return res.data

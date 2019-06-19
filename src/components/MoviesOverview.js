@@ -5,7 +5,8 @@ export default class MoviesOverview extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      year: "",
+      endingYear: "",
+      startingYear: "",
       filteredMovies: [],
       trendingMovies: []
     };
@@ -17,8 +18,8 @@ export default class MoviesOverview extends Component {
   }
   handleSearch(event){
     event.preventDefault()
-    const year = this.state.year;
-    api.getFilteredYear(year).then(response => {
+    const { endingYear, startingYear } = this.state;
+    api.getFilteredMovies(startingYear, endingYear).then(response => {
       this.setState({
         filteredMovies: response
       });
@@ -30,8 +31,14 @@ export default class MoviesOverview extends Component {
       <div className="MoviesOverview">
         <input
           type="text"
-          name="year"
-          value={this.state.year}
+          name="startingYear"
+          value={this.state.startingYear}
+          onChange={e => this.handleInputChange(e)}
+        />
+        <input
+          type="text"
+          name="endingYear"
+          value={this.state.endingYear}
           onChange={e => this.handleInputChange(e)}
         />
         <button type="submit" onClick={e => this.handleSearch(e)}> Search </button>
