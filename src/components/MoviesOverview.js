@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import api from "../api";
+import RangeSlider from './RangeSlider'
 
 export default class MoviesOverview extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      endingYear: "",
-      startingYear: "",
+      years: [1990,2017],
+      minRating: "",
+      maxRating: "",
+      minRuntime: "",
+      maxRuntime: "",
       filteredMovies: [],
       trendingMovies: []
     };
@@ -18,17 +22,30 @@ export default class MoviesOverview extends Component {
   }
   handleSearch(event){
     event.preventDefault()
-    const { endingYear, startingYear } = this.state;
+    const { years } = this.state;
+    const [ startingYear, endingYear ] = years
     api.getFilteredMovies(startingYear, endingYear).then(response => {
       this.setState({
         filteredMovies: response
       });
     });
-
+  }
+  handleSliderChange = name => (event, value) => {
+    this.setState({
+      [name]: value
+    })
   }
   render() {
     return (
       <div className="MoviesOverview">
+        <RangeSlider
+          name="years"
+          min={1990}
+          max={2017}
+          value={this.state.years}
+          handleSliderChange={(e, val)=>this.handleSliderChange(e, val)}
+          />
+
         <input
           type="text"
           name="startingYear"
