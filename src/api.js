@@ -25,11 +25,20 @@ export default {
 
   getFilteredYear(year){
     console.log(year)
-    return service.get(`/discover/movie?api_key=${apiKey}&language=en-US&sort_by=popularity.desc&primary_release_year=${year}`)
+    return service.get(`/discover/movie?api_key=${apiKey}&sort_by=popularity.desc&primary_release_year=${year}`)
       .then(res => {
         console.log(res.data.results)
         return res.data
       })
       .catch(errHandler)
-  }
+  },
+
+  getWeeklyTrending(){
+    return service.get(`/trending/all/week?api_key=${apiKey}`)
+      .then(res => {
+        console.log(res.data)
+        return res.data
+      })
+      .catch(errHandler)
+    }
 }

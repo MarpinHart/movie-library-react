@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import api from "../api";
 
-export default class MovieList extends Component {
+export default class MoviesOverview extends Component {
   constructor(props) {
     super(props);
     this.state = {
       year: "",
-      filteredMovies: []
+      filteredMovies: [],
+      trendingMovies: []
     };
   }
   handleInputChange(event) {
@@ -26,7 +27,7 @@ export default class MovieList extends Component {
   }
   render() {
     return (
-      <div className="MovieList">
+      <div className="MoviesOverview">
         <input
           type="text"
           name="year"
@@ -36,5 +37,14 @@ export default class MovieList extends Component {
         <button type="submit" onClick={e => this.handleSearch(e)}> Search </button>
       </div>
     );
+  }
+  componentDidMount(){
+    api.getWeeklyTrending()
+      .then(res => {
+        console.log(res)
+        this.setState({
+          trendingMovies: res
+        })
+      })
   }
 }
