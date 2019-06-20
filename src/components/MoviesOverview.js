@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import api from "../api";
+
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 import RangeSlider from "./RangeSlider";
 import PageNavigation from "./PageNavigation";
-import Button from "@material-ui/core/Button";
+import MovieList from "./MovieList";
 
 export default class MoviesOverview extends Component {
   constructor(props) {
@@ -13,6 +17,7 @@ export default class MoviesOverview extends Component {
       runtimes: [0, 300],
       totalPages: 0,
       page: 1,
+      checkSearch: false,
       filteredMovies: [],
       trendingMovies: []
     };
@@ -50,7 +55,8 @@ export default class MoviesOverview extends Component {
       .then(response => {
         this.setState({
           filteredMovies: response.results,
-          totalPages: response.total_pages
+          totalPages: response.total_pages,
+          checkSearch: true
         });
       });
   }
@@ -91,10 +97,19 @@ export default class MoviesOverview extends Component {
           Submit
         </Button>
 
-        <PageNavigation
-          page={this.state.page}
-          handleSearch={e => this.handlePageChange(e)}
-        />
+        {this.state.checkSearch && (
+          <PageNavigation
+            page={this.state.page}
+            handleSearch={e => this.handlePageChange(e)}
+          />
+        )}
+        <hr />
+        {this.state.filteredMovies.length !== 0 ||
+        this.state.trendingMovies.length !== 0 ? (
+          <MovieList />
+        ) : (
+          <CircularProgress />
+        )}
       </div>
     );
   }
@@ -102,8 +117,9 @@ export default class MoviesOverview extends Component {
     console.log("mannaggia iddio");
     api.getWeeklyTrending().then(res => {
       this.setState({
-        trendingMovies: res
+        trendingMovies: res.results
       });
+      console.log(this.state.trendingMovies);
     });
   }
 }
