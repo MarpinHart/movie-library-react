@@ -1,74 +1,109 @@
 import React, { Component } from "react";
 import api from "../api";
-import RangeSlider from './RangeSlider'
+import RangeSlider from "./RangeSlider";
+import PageNavigation from "./PageNavigation";
+import Button from "@material-ui/core/Button";
 
 export default class MoviesOverview extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      years: [1990,2017],
-      minRating: "",
-      maxRating: "",
-      minRuntime: "",
-      maxRuntime: "",
+      years: [1990, 2019],
+      ratings: [0, 10],
+      runtimes: [0, 300],
+      totalPages: 0,
+      page: 1,
       filteredMovies: [],
       trendingMovies: []
     };
   }
-  handleInputChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+  handlePageChange(event) {
+    event.preventDefault();
+    if (event.currentTarget.id === "next")
+      this.setState(
+        prevState => ({ page: prevState.page + 1 }),
+        () => this.handleSearch(event)
+      );
+    if (event.currentTarget.id === "previous" && this.state.page > 1)
+      this.setState(
+        prevState => ({ page: prevState.page - 1 }),
+        () => this.handleSearch(event)
+      );
   }
-  handleSearch(event){
-    event.preventDefault()
-    const { years } = this.state;
-    const [ startingYear, endingYear ] = years
-    api.getFilteredMovies(startingYear, endingYear).then(response => {
-      this.setState({
-        filteredMovies: response
+  handleSearch(event) {
+    event.preventDefault();
+    const { years, ratings, runtimes, page } = this.state;
+    const [startingYear, endingYear] = years;
+    const [minRating, maxRating] = ratings;
+    const [minRuntime, maxRuntime] = runtimes;
+    console.log(page, "as page");
+    api
+      .getFilteredMovies(
+        startingYear,
+        endingYear,
+        minRating,
+        maxRating,
+        minRuntime,
+        maxRuntime,
+        page
+      )
+      .then(response => {
+        this.setState({
+          filteredMovies: response.results,
+          totalPages: response.total_pages
+        });
       });
-    });
   }
   handleSliderChange = name => (event, value) => {
     this.setState({
       [name]: value
-    })
-  }
+    });
+  };
   render() {
     return (
       <div className="MoviesOverview">
         <RangeSlider
           name="years"
           min={1990}
-          max={2017}
+          max={2019}
           value={this.state.years}
-          handleSliderChange={(e, val)=>this.handleSliderChange(e, val)}
-          />
+          handleSliderChange={(e, val) => this.handleSliderChange(e, val)}
+        />
+        <RangeSlider
+          name="ratings"
+          min={0}
+          max={10}
+          value={this.state.ratings}
+          handleSliderChange={(e, val) => this.handleSliderChange(e, val)}
+        />
+        <RangeSlider
+          name="runtimes"
+          min={0}
+          max={300}
+          value={this.state.runtimes}
+          handleSliderChange={(e, val) => this.handleSliderChange(e, val)}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={e => this.handleSearch(e)}
+        >
+          Submit
+        </Button>
 
-        <input
-          type="text"
-          name="startingYear"
-          value={this.state.startingYear}
-          onChange={e => this.handleInputChange(e)}
+        <PageNavigation
+          page={this.state.page}
+          handleSearch={e => this.handlePageChange(e)}
         />
-        <input
-          type="text"
-          name="endingYear"
-          value={this.state.endingYear}
-          onChange={e => this.handleInputChange(e)}
-        />
-        <button type="submit" onClick={e => this.handleSearch(e)}> Search </button>
       </div>
     );
   }
-  componentDidMount(){
-    api.getWeeklyTrending()
-      .then(res => {
-        console.log(res)
-        this.setState({
-          trendingMovies: res
-        })
-      })
+  componentDidMount() {
+    console.log("mannaggia iddio");
+    api.getWeeklyTrending().then(res => {
+      this.setState({
+        trendingMovies: res
+      });
+    });
   }
 }
