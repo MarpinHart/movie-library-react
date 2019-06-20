@@ -96,17 +96,21 @@ export default class MoviesOverview extends Component {
         >
           Submit
         </Button>
-
         {this.state.checkSearch && (
           <PageNavigation
             page={this.state.page}
+            totalPages={this.state.totalPages}
             handleSearch={e => this.handlePageChange(e)}
           />
         )}
         <hr />
         {this.state.filteredMovies.length !== 0 ||
         this.state.trendingMovies.length !== 0 ? (
-          <MovieList />
+          this.state.filteredMovies.map(movie => 
+            (<MovieList
+              movie={movie}
+              />)
+          )
         ) : (
           <CircularProgress />
         )}
