@@ -111,7 +111,7 @@ export default class MoviesOverview extends Component {
           {this.state.filteredMovies.length === 0 && this.state.checkSearch ? (
             <CircularProgress />
           ) : (
-            this.state.filteredMovies.map(movie => <MovieList movie={movie} />)
+            this.state.filteredMovies.map(movie => <MovieList key={movie.id} movie={movie} />)
           )}
         </div>
       </div>
