@@ -16,7 +16,7 @@ $ npm install
 - create a .env file with the following properties:
 REACT_APP_API_KEY = "key" // MovieDB API key
 
-Inside the folter use the following command lines to run the server locally:
+Inside the folder use the following command lines to run the server locally:
 ```sh
 $ npm start
 ```
@@ -28,6 +28,6 @@ $ npm start
 - MovieDB API for movie information
 
 ## Heroku
-The application can be found on Heroku under 
+The application can be found on Heroku under https://movie-finder-challenge.herokuapp.com/
 
 <img src='/screenshot.png'>
