@@ -3,12 +3,12 @@ import Button from "@material-ui/core/Button";
 
 export default function PageNavigation({ page, totalPages, handleSearch }) {
   return (
-    <div>
-      <Button id="previous" color="primary" className="PageNavigation" onClick={handleSearch}>
+    <div className="PageNavigation" >
+      <Button id="previous" color="primary" onClick={handleSearch}>
         {"<"}
       </Button>
-      {page}/{totalPages}
-      <Button id="next" color="primary" className="PageNavigation" onClick={handleSearch}>
+      Page: {page}/{totalPages}
+      <Button id="next" color="primary" onClick={handleSearch}>
         {">"}
       </Button>
     </div>

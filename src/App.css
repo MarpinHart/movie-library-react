@@ -1,0 +1,61 @@
+*{
+  font-family: 'Roboto'
+}
+.MoviesOverview{
+  margin: 1.3em
+}
+
+.MovieCard {
+  max-width: 11em;
+  margin: 0.5em;
+}
+
+.MovieList {
+  display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	align-content: space-around;
+}
+
+.MuiCardContent-root{
+  height: 12em;
+  display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+}
+
+.sliders{
+  width: 10em;
+  margin: 0 auto 2em;
+}
+
+.PageNavigation{
+  text-align: center;
+}
+
+.RangeSlider{
+  margin-bottom: 1em
+}
+
+.slider-flex{
+  display: flex;
+	flex-direction: row;
+}
+
+.slider-label{
+  margin: 0 0em 0em 0;
+  width: 15em;
+}
+
+.values{
+  font-size: 0.7em
+}
+
+.submit-button {
+  text-align: center;
+}
+
+

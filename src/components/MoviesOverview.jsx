@@ -18,8 +18,7 @@ export default class MoviesOverview extends Component {
       totalPages: 0,
       page: 1,
       checkSearch: false,
-      filteredMovies: [],
-      trendingMovies: []
+      filteredMovies: []
     };
   }
   handlePageChange(event) {
@@ -36,7 +35,7 @@ export default class MoviesOverview extends Component {
       );
   }
   handleSearch(event) {
-    event.preventDefault();
+    if (event) event.preventDefault();
     const { years, ratings, runtimes, page } = this.state;
     const [startingYear, endingYear] = years;
     const [minRating, maxRating] = ratings;
@@ -68,34 +67,38 @@ export default class MoviesOverview extends Component {
   render() {
     return (
       <div className="MoviesOverview">
-        <RangeSlider
-          name="years"
-          min={1990}
-          max={2019}
-          value={this.state.years}
-          handleSliderChange={(e, val) => this.handleSliderChange(e, val)}
-        />
-        <RangeSlider
-          name="ratings"
-          min={0}
-          max={10}
-          value={this.state.ratings}
-          handleSliderChange={(e, val) => this.handleSliderChange(e, val)}
-        />
-        <RangeSlider
-          name="runtimes"
-          min={0}
-          max={300}
-          value={this.state.runtimes}
-          handleSliderChange={(e, val) => this.handleSliderChange(e, val)}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={e => this.handleSearch(e)}
-        >
-          Submit
-        </Button>
+        <div className="sliders">
+          <RangeSlider
+            name="years"
+            min={1990}
+            max={2019}
+            value={this.state.years}
+            handleSliderChange={(e, val) => this.handleSliderChange(e, val)}
+          />
+          <RangeSlider
+            name="ratings"
+            min={0}
+            max={10}
+            value={this.state.ratings}
+            handleSliderChange={(e, val) => this.handleSliderChange(e, val)}
+          />
+          <RangeSlider
+            name="runtimes"
+            min={0}
+            max={300}
+            value={this.state.runtimes}
+            handleSliderChange={(e, val) => this.handleSliderChange(e, val)}
+          />
+          <div className="submit-button">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={e => this.handleSearch(e)}
+          >
+            Submit
+          </Button>
+          </div>
+        </div>
         {this.state.checkSearch && (
           <PageNavigation
             page={this.state.page}
@@ -103,27 +106,14 @@ export default class MoviesOverview extends Component {
             handleSearch={e => this.handlePageChange(e)}
           />
         )}
-        <hr />
-        {this.state.filteredMovies.length !== 0 ||
-        this.state.trendingMovies.length !== 0 ? (
-          this.state.filteredMovies.map(movie => 
-            (<MovieList
-              movie={movie}
-              />)
-          )
-        ) : (
-          <CircularProgress />
-        )}
+        <div className="MovieList">
+          {this.state.filteredMovies.length === 0 && this.state.checkSearch ? (
+            <CircularProgress />
+          ) : (
+            this.state.filteredMovies.map(movie => <MovieList movie={movie} />)
+          )}
+        </div>
       </div>
     );
-  }
-  componentDidMount() {
-    console.log("mannaggia iddio");
-    api.getWeeklyTrending().then(res => {
-      this.setState({
-        trendingMovies: res.results
-      });
-      console.log(this.state.trendingMovies);
-    });
   }
 }
