@@ -28,6 +28,6 @@ $ npm start
 - MovieDB API for movie information
 
 ## Heroku
-The application can be found on Heroku under https://winderapp.herokuapp.com/
+The application can be found on Heroku under 
 
 <img src='/screenshot.png'>
