@@ -95,7 +95,7 @@ export default class MoviesOverview extends Component {
             color="primary"
             onClick={e => this.handleSearch(e)}
           >
-            Submit
+            Search
           </Button>
           </div>
         </div>
