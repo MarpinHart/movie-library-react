@@ -21,6 +21,7 @@ export default class MoviesOverview extends Component {
       filteredMovies: []
     };
   }
+
   handlePageChange(event) {
     event.preventDefault();
     if (event.currentTarget.id === "next")

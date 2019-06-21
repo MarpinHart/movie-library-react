@@ -1,6 +1,8 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 
+// Component to handle page navigation
+
 export default function PageNavigation({ page, totalPages, handleSearch }) {
   return (
     <div className="PageNavigation" >
