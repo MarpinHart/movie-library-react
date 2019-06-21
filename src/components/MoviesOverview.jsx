@@ -8,7 +8,7 @@ import RangeSlider from "./RangeSlider";
 import PageNavigation from "./PageNavigation";
 import MovieList from "./MovieList";
 
-export default class MoviesOverview extends Component {
+class MoviesOverview extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -118,3 +118,5 @@ export default class MoviesOverview extends Component {
     );
   }
 }
+
+export default MoviesOverview;
