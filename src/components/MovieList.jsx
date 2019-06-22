@@ -5,7 +5,6 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 
 export default function MovieList({ i, movie }) {
-  console.log(movie.poster_path);
   return (
     <div className="MovieCard">
       <Card id={i}>

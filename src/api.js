@@ -25,26 +25,14 @@ export default {
   },
 
   getFilteredMovies(startingYear, endingYear, minRating, maxRating, minRuntime, maxRuntime, page) {
-    console.log(startingYear, endingYear, minRating, maxRating, minRuntime, maxRuntime, page)
     return service
       .get(
         `/discover/movie?api_key=${apiKey}&page=${page}&primary_release_date.gte=${startingYear}&primary_release_date.lte=${endingYear}&vote_average.gte=${minRating}&vote_average.lte=${maxRating}&with_runtime.gte=${minRuntime}&with_runtime.lte=${maxRuntime}`
       )
       .then(res => {
-        console.log(res.data);
         return res.data;
       })
       .catch(errHandler);
   },
-
-  getWeeklyTrending() {
-    return service
-      .get(`/trending/all/week?api_key=${apiKey}`)
-      .then(res => {
-        console.log(res.data, "weekly");
-        return res.data;
-      })
-      .catch(errHandler);
-  }
 };
 

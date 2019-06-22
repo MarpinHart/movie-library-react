@@ -41,7 +41,6 @@ class MoviesOverview extends Component {
     const [startingYear, endingYear] = years;
     const [minRating, maxRating] = ratings;
     const [minRuntime, maxRuntime] = runtimes;
-    console.log(page, "as page");
     api
       .getFilteredMovies(
         startingYear,
